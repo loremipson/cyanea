@@ -17,5 +17,12 @@
   },
   "dependencies": {
     "color": "^3.1.2"
-  }
+  },
+  "keywords": [
+    "color",
+    "palette",
+    "generator",
+    "theme",
+    "spectrum"
+  ]
 }
