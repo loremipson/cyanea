@@ -4,6 +4,7 @@
   "description": "Creates a full spectrum color palette from a single color value.",
   "main": "dist/index.js",
   "author": "Tyler Ipson <tyler.ipson@gmail.com>",
+  "repository": "github:loremipson/cyanea",
   "license": "MIT",
   "scripts": {
     "build": "babel src -d dist"
