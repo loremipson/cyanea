@@ -7,7 +7,8 @@
   "repository": "github:loremipson/cyanea",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "build:site": "cd www && yarn build"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
