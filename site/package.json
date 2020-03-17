@@ -1,7 +1,6 @@
 {
   "name": "cyanea-web",
   "version": "0.0.0",
-  "main": "index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -9,6 +8,7 @@
     "build": "parcel build index.html --no-source-maps"
   },
   "dependencies": {
+    "@babel/core": "^7.8.7",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "cyanea": "^1.0.2",
@@ -16,7 +16,7 @@
     "react-dom": "^16.13.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
+    "@babel/cli": "^7.8.4",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "babel-plugin-emotion": "^10.0.29",
