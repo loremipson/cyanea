@@ -29,7 +29,7 @@ const Color = styled.div`
   background-color: ${({ hex }) => hex};
   width: 120px;
   padding: 1em;
-  font-size: .7rem;
+  font-size: 0.8rem;
 
   &:hover {
     color: ${({ complemented }) => complemented && complemented.isDark ? '#fff' : '#000'};
@@ -151,8 +151,11 @@ const Index = () => {
         <h1>cyanea</h1>
         <p>A full-spectrum color palette generator. View the source and usage information on <a href="https://github.com/loremipson/cyanea">github</a>.</p>
         <Form onSubmit={e => handleSubmit(e)}>
-          <Input type="text" name="color" placeholder="#663399" />
-          <Button type="submit">Create Colors</Button>
+          <label for="color">Submit a valid color to try it out</label>
+          <FieldGroup>
+            <Input type="text" name="color" placeholder="#663399" />
+            <Button type="submit">Create Colors</Button>
+          </FieldGroup>
         </Form>
         {failure && <Failure color={color.red}>{failure}</Failure>}
         <div>
