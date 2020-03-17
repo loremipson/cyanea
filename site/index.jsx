@@ -41,7 +41,7 @@ const ColorBase = styled(Color)`
   padding: 3rem;
 `
 
-const Form = styled.form`
+const FieldGroup = styled.form`
   display: flex;
   align-items: stretch;
 `
@@ -150,13 +150,13 @@ const Index = () => {
       <Container color={passedColor}>
         <h1>cyanea</h1>
         <p>A full-spectrum color palette generator. View the source and usage information on <a href="https://github.com/loremipson/cyanea">github</a>.</p>
-        <Form onSubmit={e => handleSubmit(e)}>
+        <form onSubmit={e => handleSubmit(e)}>
           <label for="color">Submit a valid color to try it out</label>
           <FieldGroup>
             <Input type="text" name="color" placeholder="#663399" />
             <Button type="submit">Create Colors</Button>
           </FieldGroup>
-        </Form>
+        </form>
         {failure && <Failure color={color.red}>{failure}</Failure>}
         <div>
           {Object.keys(color).map(c => (
