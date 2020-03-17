@@ -8512,6 +8512,11 @@ typedarray@^0.0.6:
   resolved "https://npm.clearlink.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typeface-varela-round@^0.0.71:
+  version "0.0.71"
+  resolved "https://registry.yarnpkg.com/typeface-varela-round/-/typeface-varela-round-0.0.71.tgz#05ba85720ceaa2ab61f47f450e99301e58b422e6"
+  integrity sha512-wxFtFZ0lp82cM1i7ec2kACtRwBz0H986zaDlqDtLXSpCX83Rujr2VAkVtud7zvKTeUILADuf/JYk67zgO5+zsg==
+
 uglify-js@^3.1.4:
   version "3.8.0"
   resolved "https://npm.clearlink.com/uglify-js/-/uglify-js-3.8.0.tgz#f3541ae97b2f048d7e7e3aa4f39fd8a1f5d7a805"

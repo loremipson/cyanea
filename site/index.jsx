@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import cyanea from 'cyanea'
 import ColorPackage from 'color'
 import { Global, css } from '@emotion/core'
+import 'typeface-varela-round'
 
 const Label = styled.h2`
   font-size: 1.2rem;
@@ -11,23 +12,21 @@ const Label = styled.h2`
 `
 
 const ColorGroup = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
 
   @media (min-width: 600px) {
-    flex-direction: row;
+    grid-template-columns: max-content auto;
   }
 `
 
 const ColorVariations = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 `
 
 const Color = styled.div`
   color: ${({ isDark }) => isDark ? '#fff' : '#000'};
   background-color: ${({ hex }) => hex};
-  width: 120px;
   padding: 1em;
   font-size: 0.8rem;
 
@@ -79,7 +78,7 @@ const Container = styled.div`
   width: 90%;
   max-width: 900px;
   margin: 0 auto;
-  font-family: 'Sen', sans-serif;
+  font-family: 'Varela Round', sans-serif;
 
   ${Input} {
     border: 1px solid ${({ color }) => color.variants[1].hex};
@@ -151,9 +150,9 @@ const Index = () => {
         <h1>cyanea</h1>
         <p>A full-spectrum color palette generator. View the source and usage information on <a href="https://github.com/loremipson/cyanea">github</a>.</p>
         <form onSubmit={e => handleSubmit(e)}>
-          <label htmlFor="color">Submit a valid color to try it out</label>
+          <label htmlFor="color">Pass a valid color to try it out</label>
           <FieldGroup>
-            <Input type="text" name="color" placeholder="#663399" />
+            <Input id="color" type="text" name="color" placeholder="#663399" />
             <Button type="submit">Create Colors</Button>
           </FieldGroup>
         </form>
@@ -166,9 +165,7 @@ const Index = () => {
                 <ColorBase {...color[c]}>{color[c].hex}</ColorBase>
                 <ColorVariations>
                   {color[c].variants.map(col => (
-                    <div key={col.hex} style={{}}>
-                      <Color {...col}>{col.hex}</Color>
-                    </div>
+                    <Color key={col.hex} {...col}>{col.hex}</Color>
                   ))}
                 </ColorVariations>
               </ColorGroup>

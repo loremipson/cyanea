@@ -13,7 +13,8 @@
     "@emotion/styled": "^10.0.27",
     "cyanea": "^1.0.2",
     "react": "^16.3.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "typeface-varela-round": "^0.0.71"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
