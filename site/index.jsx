@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import cyanea from 'cyanea'
+import ColorPackage from 'color'
 import { Global, css } from '@emotion/core'
 
 const Label = styled.h2`
@@ -65,6 +66,14 @@ const Button = styled.button`
   transition: all .2s ease-in-out;
 `
 
+const Failure = styled.div`
+  color: ${({ color }) => color.isDark ? color.variants[0].hex : color.variants[17].hex};
+  background-color: ${({ color }) => color.hex};
+  margin: 2rem 0 0;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+`
+
 // Set colors on styled elements
 const Container = styled.div`
   width: 90%;
@@ -94,17 +103,25 @@ const Container = styled.div`
 const Index = () => {
 
   const [color, setColor] = useState(cyanea('rebeccapurple'))
+  const [failure, setFailure] = useState(null)
 
   const handleSubmit = event => {
     event.preventDefault()
-    try {
-      setColor(cyanea(event.target.elements.color.value))
-    }
-    catch(err) {
-      console.error(err)
+    const { value } = event.target.elements.color
+    const [h, s, l] = ColorPackage(value).hsl().color
+
+    if (l > 96) {
+      setFailure('Oops! This color is too light to work correctly. Try a different one.')
+      return false
     }
 
-    return false
+    if (s < 5) {
+      setFailure('Oops! This color doesn\'t have enough saturation to work correctly. Try a different one.')
+      return false
+    }
+
+    setColor(cyanea(event.target.elements.color.value))
+    setFailure(null)
   }
 
   const passedColor = color[Object.keys(color)[1]]
@@ -137,6 +154,7 @@ const Index = () => {
           <Input type="text" name="color" placeholder="#663399" />
           <Button type="submit">Create Colors</Button>
         </Form>
+        {failure && <Failure color={color.red}>{failure}</Failure>}
         <div>
           {Object.keys(color).map(c => (
             <div key={color[c].hex}>
