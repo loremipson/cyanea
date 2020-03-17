@@ -1,0 +1,162 @@
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+import styled from '@emotion/styled'
+import cyanea from 'cyanea'
+import { Global, css } from '@emotion/core'
+
+const Label = styled.h2`
+  font-size: 1.2rem;
+  text-transform: capitalize;
+`
+
+const ColorGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
+`
+
+const ColorVariations = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
+
+const Color = styled.div`
+  color: ${({ isDark }) => isDark ? '#fff' : '#000'};
+  background-color: ${({ hex }) => hex};
+  width: 120px;
+  padding: 1em;
+  font-size: .7rem;
+
+  &:hover {
+    color: ${({ complemented }) => complemented && complemented.isDark ? '#fff' : '#000'};
+    background-color: ${({ complemented }) => complemented && complemented.hex};
+  }
+`
+
+const ColorBase = styled(Color)`
+  padding: 3rem;
+`
+
+const Form = styled.form`
+  display: flex;
+  align-items: stretch;
+`
+
+const Input = styled.input`
+  all: unset;
+  background-color: white;
+  border-top-left-radius: 0.2em;
+  border-bottom-left-radius: 0.2em;
+  width: 40%;
+  padding: 0.5em;
+  transition: all .2s ease-in-out;
+`
+
+const Button = styled.button`
+  all: unset;
+  border-top-right-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  padding: 0.5em 1em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+`
+
+// Set colors on styled elements
+const Container = styled.div`
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Sen', sans-serif;
+
+  ${Input} {
+    border: 1px solid ${({ color }) => color.variants[1].hex};
+    border-right: none;
+
+    &:focus {
+      border-color: ${({ color }) => color.hex};
+    }
+  }
+
+  ${Button} {
+    color: ${({ color }) => color.isDark ? color.variants[1].hex : color.variants[18].hex};
+    background-color: ${({ color }) => color.hex};
+
+    &:hover {
+      background-color: ${({ color }) => color.variants[13].hex};
+    }
+  }
+`
+
+const Index = () => {
+
+  const [color, setColor] = useState(cyanea('rebeccapurple'))
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    try {
+      setColor(cyanea(event.target.elements.color.value))
+    }
+    catch(err) {
+      console.error(err)
+    }
+
+    return false
+  }
+
+  const passedColor = color[Object.keys(color)[1]]
+
+  return (
+    <>
+      <Global styles={css`
+        html {
+          color: ${passedColor.variants[17].hex};
+          background-color: ${passedColor.variants[0].hex};
+        }
+
+        body {
+          margin: 0;
+          padding: 0 0 5vw;
+
+          a {
+            color: ${passedColor.hex};
+
+            &:hover {
+              color: ${passedColor.variants[10].hex};
+            }
+          }
+        }
+      `} />
+      <Container color={passedColor}>
+        <h1>cyanea</h1>
+        <p>A full-spectrum color palette generator. View the source and usage information on <a href="https://github.com/loremipson/cyanea">github</a>.</p>
+        <Form onSubmit={e => handleSubmit(e)}>
+          <Input type="text" name="color" placeholder="#663399" />
+          <Button type="submit">Create Colors</Button>
+        </Form>
+        <div>
+          {Object.keys(color).map(c => (
+            <div key={color[c].hex}>
+              <Label>{c}</Label>
+              <ColorGroup>
+                <ColorBase {...color[c]}>{color[c].hex}</ColorBase>
+                <ColorVariations>
+                  {color[c].variants.map(col => (
+                    <div key={col.hex} style={{}}>
+                      <Color {...col}>{col.hex}</Color>
+                    </div>
+                  ))}
+                </ColorVariations>
+              </ColorGroup>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </>
+  )
+}
+
+ReactDOM.render(<Index />, document.getElementById('root'))
