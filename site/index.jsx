@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import cyanea from 'cyanea'
 import ColorPackage from 'color'
+import ReactGA from 'react-ga'
 import { Global, css } from '@emotion/core'
 import 'typeface-varela-round'
+
+ReactGA.initialize('UA-160836815-1')
 
 const Label = styled.h2`
   font-size: 1.2rem;
@@ -107,20 +110,32 @@ const Index = () => {
   const handleSubmit = event => {
     event.preventDefault()
     const { value } = event.target.elements.color
-    const [h, s, l] = ColorPackage(value).hsl().color
 
-    if (l > 96) {
-      setFailure('Oops! This color is too light to work correctly. Try a different one.')
-      return false
+    ReactGA.event({
+      category: 'Color',
+      action: 'Changed the value',
+      value
+    })
+
+    try {
+      const [h, s, l] = ColorPackage(value).hsl().color
+
+      if (l > 96) {
+        setFailure('Oops! This color is too light to work correctly. Try a different one.')
+        return false
+      }
+
+      if (s < 5) {
+        setFailure('Oops! This color doesn\'t have enough saturation to work correctly. Try a different one.')
+        return false
+      }
+
+      setColor(cyanea(event.target.elements.color.value))
+      setFailure(null)
     }
-
-    if (s < 5) {
-      setFailure('Oops! This color doesn\'t have enough saturation to work correctly. Try a different one.')
-      return false
+    catch (err) {
+      setFailure('Oops! This doesn\'t look like a valid color. Did you forget the #?')
     }
-
-    setColor(cyanea(event.target.elements.color.value))
-    setFailure(null)
   }
 
   const passedColor = color[Object.keys(color)[1]]
