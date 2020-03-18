@@ -114,7 +114,7 @@ const Index = () => {
     ReactGA.event({
       category: 'Color',
       action: 'Changed the value',
-      value
+      label: value,
     })
 
     try {
