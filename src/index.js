@@ -23,7 +23,7 @@ const lightnessLevels = Array.from(Array(20), (_, index) => ((index + 0.5) * 10)
 const initializeColor = color => ({
   isDark: color.isDark(),
   hex: color.hex(),
-  rgb: color.rgb().color.join(' '),
+  rgb: color.rgb().color,
 })
 
 const colorObject = color => ({
