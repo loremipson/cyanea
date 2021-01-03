@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import cyanea from 'cyanea'
 import ColorPackage from 'color'
 import ReactGA from 'react-ga'
-import { Global, css } from '@emotion/core'
+import { Global, css } from '@emotion/react'
 import 'typeface-varela-round'
 
 ReactGA.initialize('UA-160836815-1')
