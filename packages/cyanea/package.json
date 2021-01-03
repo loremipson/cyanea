@@ -1,6 +1,6 @@
 {
   "name": "cyanea",
-  "version": "0.0.0",
+  "version": "1.0.4",
   "description": "Creates a full spectrum color palette from a single color value.",
   "main": "./dist/cyanea.umd.js",
   "exports": "./dist/cyanea.modern.js",

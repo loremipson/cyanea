@@ -1,0 +1,21 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - run: yarn install --frozen-lockfile
+      - run: lerna run build
+      - run: lerna publish --conventionalCommits
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
