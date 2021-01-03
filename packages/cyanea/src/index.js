@@ -19,16 +19,10 @@ const names = [
 const hues = names.map((_, index) => (index * (360 / names.length)) % 360)
 const lightnessLevels = Array.from(Array(20), (_, index) => ((index + 0.5) * 10) / 2).reverse()
 
-
-const initializeColor = color => ({
+const colorObject = color => ({
   isDark: color.isDark(),
   hex: color.hex(),
   rgb: color.rgb().color.join(' '),
-})
-
-const colorObject = color => ({
-  ...initializeColor(color),
-  complemented: initializeColor(color.rotate(180)),
 })
 
 const createVariations = color => lightnessLevels.map(level => {
