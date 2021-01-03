@@ -16,8 +16,7 @@ const names = [
   'red',
 ]
 
-const hues = names.map((_, index) => (index * (360 / names.length)) % 360)
-const lightnessLevels = Array.from(Array(20), (_, index) => ((index + 0.5) * 10) / 2).reverse()
+const lightnessLevels = Array.from(Array(40), (_, index) => ((index + 0.5) * 5) / 2).reverse()
 
 const colorObject = color => ({
   isDark: color.isDark(),
