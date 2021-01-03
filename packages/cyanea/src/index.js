@@ -38,7 +38,19 @@ const cyanea = hex => {
     gray: {
       ...colorObject(grayVariant),
       variants: createVariations(grayVariant),
-    }
+    },
+    ...s > 0 && {
+      desaturated: {
+        ...colorObject(Color.hsl(h, (s / 3), l)),
+        variants: createVariations(Color.hsl(h, (s / 3), l)),
+      },
+    },
+    ...s < 100 && {
+      saturated: {
+        ...colorObject(Color.hsl(h, (s + 25), l)),
+        variants: createVariations(Color.hsl(h, (s + 25), l)),
+      },
+    },
   }
 
   hues.forEach(hue => {
