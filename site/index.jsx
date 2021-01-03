@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import cyanea from 'cyanea'
@@ -24,19 +24,18 @@ const ColorGroup = styled.div`
 
 const ColorVariations = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+`
+
+const Hex = styled.span`
+  opacity: 0.7;
 `
 
 const Color = styled.div`
   color: ${({ isDark }) => isDark ? '#fff' : '#000'};
   background-color: ${({ hex }) => hex};
   padding: 1em;
-  font-size: 0.8rem;
-
-  &:hover {
-    color: ${({ complemented }) => complemented && complemented.isDark ? '#fff' : '#000'};
-    background-color: ${({ complemented }) => complemented && complemented.hex};
-  }
+  font-size: 0.7rem;
 `
 
 const ColorBase = styled(Color)`
@@ -84,7 +83,7 @@ const Container = styled.div`
   font-family: 'Varela Round', sans-serif;
 
   ${Input} {
-    border: 1px solid ${({ color }) => color.variants[1].hex};
+    border: 1px solid ${({ color }) => color.variants[10].hex};
     border-right: none;
 
     &:focus {
@@ -93,28 +92,29 @@ const Container = styled.div`
   }
 
   ${Button} {
-    color: ${({ color }) => color.isDark ? color.variants[1].hex : color.variants[18].hex};
+    color: ${({ color }) => color.isDark ? color.variants[3].hex : color.variants[37].hex};
     background-color: ${({ color }) => color.hex};
 
     &:hover {
-      background-color: ${({ color }) => color.variants[13].hex};
+      background-color: ${({ color }) => color.variants[20].hex};
     }
   }
 `
 
 const Index = () => {
 
-  const [color, setColor] = useState(cyanea('rebeccapurple'))
+  const [value, setValue] = useState('#663399')
+  const [color, setColor] = useState(cyanea(value))
   const [failure, setFailure] = useState(null)
 
   const handleSubmit = event => {
     event.preventDefault()
-    const { value } = event.target.elements.color
+    const { value: fieldValue } = event.target.elements.color
 
     ReactGA.event({
       category: 'Color',
       action: 'Changed the value',
-      label: value,
+      label: fieldValue,
     })
 
     try {
@@ -130,6 +130,7 @@ const Index = () => {
         return false
       }
 
+      setValue(fieldValue)
       setColor(cyanea(event.target.elements.color.value))
       setFailure(null)
     }
@@ -138,17 +139,20 @@ const Index = () => {
     }
   }
 
-  const passedColor = color[Object.keys(color)[1]]
+  const passedColor = color[Object.keys(color)[0]]
+
+  const { gray, desaturated, saturated, ...colors } = color
 
   return (
     <>
       <Global styles={css`
         html {
-          color: ${passedColor.variants[17].hex};
+          color: ${passedColor.variants[27].hex};
           background-color: ${passedColor.variants[0].hex};
         }
 
         body {
+          background-color: ${passedColor.variants[0].hex};
           margin: 0;
           padding: 0 0 5vw;
 
@@ -156,7 +160,7 @@ const Index = () => {
             color: ${passedColor.hex};
 
             &:hover {
-              color: ${passedColor.variants[10].hex};
+              color: ${passedColor.variants[20].hex};
             }
           }
         }
@@ -173,14 +177,67 @@ const Index = () => {
         </form>
         {failure && <Failure color={color.red}>{failure}</Failure>}
         <div>
-          {Object.keys(color).map(c => (
+          <div key="gray">
+            <Label>Gray</Label>
+            <ColorGroup>
+              <ColorBase {...gray}>
+                <Hex>{gray.hex}</Hex>
+              </ColorBase>
+              <ColorVariations>
+                {gray.variants.map(col => (
+                  <Color key={col.hex} {...col}>
+                    <Hex>{col.hex}</Hex>
+                  </Color>
+                ))}
+              </ColorVariations>
+            </ColorGroup>
+          </div>
+          {desaturated && (
+            <div key="desaturated">
+              <Label>Desaturated</Label>
+              <ColorGroup>
+                <ColorBase {...desaturated}>
+                  <Hex>{desaturated.hex}</Hex>
+                </ColorBase>
+                <ColorVariations>
+                  {desaturated.variants.map(col => (
+                    <Color key={col.hex} {...col}>
+                      <Hex>{col.hex}</Hex>
+                    </Color>
+                  ))}
+                </ColorVariations>
+              </ColorGroup>
+            </div>
+          )}
+          {saturated && (
+            <div key="saturated">
+              <Label>Saturated</Label>
+              <ColorGroup>
+                <ColorBase {...saturated}>
+                  <Hex>{saturated.hex}</Hex>
+                </ColorBase>
+                <ColorVariations>
+                  {saturated.variants.map(col => (
+                    <Color key={col.hex} {...col}>
+                      <Hex>{col.hex}</Hex>
+                    </Color>
+                  ))}
+                </ColorVariations>
+              </ColorGroup>
+            </div>
+          )}
+          {Object.keys(colors).map((c, i) => (
             <div key={color[c].hex}>
               <Label>{c}</Label>
               <ColorGroup>
-                <ColorBase {...color[c]}>{color[c].hex}</ColorBase>
+                <ColorBase {...color[c]}>
+                  <Hex>{color[c].hex}</Hex>
+                </ColorBase>
                 <ColorVariations>
                   {color[c].variants.map(col => (
-                    <Color key={col.hex} {...col}>{col.hex}</Color>
+                    <Color key={col.hex} {...col}>
+                      <Hex>{col.hex}</Hex>
+                    </Color>
                   ))}
                 </ColorVariations>
               </ColorGroup>
