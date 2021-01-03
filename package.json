@@ -3,8 +3,5 @@
   "workspaces": [
     "packages/*",
     "site"
-  ],
-  "devDependencies": {
-    "semantic-release": "^17.0.4"
-  }
+  ]
 }
