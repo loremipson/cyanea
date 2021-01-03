@@ -32,7 +32,7 @@ const createVariations = color => lightnessLevels.map(level => {
 const cyanea = hex => {
   const color = Color(hex)
   const [h, s, l] = color.hsl().color
-  const grayVariant = Color.hsl(h, (s / 8), l)
+  const grayVariant = Color.hsl(h, (s / 10), l)
   
   const builtColors = {
     gray: {
