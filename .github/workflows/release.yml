@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: "14.x"
       - run: yarn install --frozen-lockfile
-      - run: lerna run build
-      - run: lerna publish --conventionalCommits
+      - run: npx lerna run build
+      - run: npx lerna publish --conventionalCommits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
