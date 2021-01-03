@@ -13,9 +13,9 @@ const names = [
   'violet',
   'fuschia',
   'pink',
-  'red',
 ]
 
+const hues = base => names.map((_, index) => base + (index * (360 / names.length)) % 360)
 const lightnessLevels = Array.from(Array(40), (_, index) => ((index + 0.5) * 5) / 2).reverse()
 
 const colorObject = color => ({
@@ -33,7 +33,7 @@ const cyanea = hex => {
   const [h, s, l] = color.hsl().color
   const grayVariant = Color.hsl(h, (s / 10), l)
   
-  const builtColors = {
+  const adjustments = {
     gray: {
       ...colorObject(grayVariant),
       variants: createVariations(grayVariant),
@@ -52,16 +52,22 @@ const cyanea = hex => {
     },
   }
 
-  hues.forEach(hue => {
-    const adjustedColor = color.rotate(hue)
+  const reduced = hues(h).reduce((acc, hue) => {
+    const adjustedColor = Color.hsl(hue, s, l)
     const [ h ] = adjustedColor.hsl().color
-    builtColors[names[Math.round((h / 30))]] = {
-      ...colorObject(adjustedColor),
-      variants: createVariations(adjustedColor),
+    return {
+      ...acc,
+      [names[Math.round(h / 30)] || 'red']: {
+        ...colorObject(adjustedColor),
+        variants: createVariations(adjustedColor),
+      },
     }
-  })
+  }, {})
 
-  return builtColors
+  return {
+    ...reduced,
+    ...adjustments,
+  }
 }
 
 export default cyanea
