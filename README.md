@@ -20,15 +20,15 @@ From here, cyanea generates a color object for each of the 12 hues in the color 
 
 ```js
 {
-  voilet: {
+  violet: {
     isDark: true,
     hex: '#663399',
-    rgb: '101.99999999999996 50.999999999999986 153.00000000000003',
+    rgb: ['101.99999999999996', '50.999999999999986', '153.00000000000003'],
     variants: [
       {
         isDark: false,
         hex: '#F9F5FC',
-        rgb: '248.625 245.4375 251.81249999999997',
+        rgb: ['248.625', '245.4375', '251.81249999999997'],
       },
       // ... repeated for the remaining light/dark variants
     ],
@@ -57,4 +57,5 @@ const passedColor = colors[Object.keys(colors)[0]]
 
 * cyanea depends on [`color`](https://github.com/Qix-/color) instead of `chroma-js`, which has a much smaller unpacked size
 * cyanea provides more shade variations and goes to a darker scale. This is useful for creating light and dark modes for your themes.
+* cyanea provides both hex and rgb options so you can easily play with `rgba()` when necessary. e.g. `box-shadow`, etc.
 * For every generated color, cyanea provides a `isDark` boolean to help determine text colors for when the color is used as a background.
