@@ -24,21 +24,11 @@ From here, cyanea generates a color object for each of the 12 hues in the color 
     isDark: true,
     hex: '#663399',
     rgb: ['101.99999999999996', '50.999999999999986', '153.00000000000003'],
-    complemented: {
-      isDark: true,
-      hex: '#669933',
-      rgb: ['102.00000000000003', '153.00000000000003', '50.999999999999986'],
-    },
     variants: [
       {
         isDark: false,
         hex: '#F9F5FC',
         rgb: ['248.625', '245.4375', '251.81249999999997'],
-        complemented: {
-          isDark: false,
-          hex: '#F9FCF5',
-          rgb: ['248.625', '251.81249999999997', '245.4375'],
-        },
       },
       // ... repeated for the remaining light/dark variants
     ],
@@ -47,19 +37,25 @@ From here, cyanea generates a color object for each of the 12 hues in the color 
 }
 ```
 
+The color you pass will be the first color returned in the object. Since you might not always know what the hue name is, a useful way to get the passed color value is:
+
+```js
+const colors = cyanea('#663399')
+const passedColor = colors[Object.keys(colors)[0]]
+```
+
 ### Available properties
 
-| Key            | Type    | Description                                                                                                               |
-|----------------|---------|---------------------------------------------------------------------------------------------------------------------------|
-| `isDark`       | Boolean | Returns `true` or `false` for the current color. This is useful for determining if text on the color is light or dark.    |
-| `hex`          | String  | The colors hex value. e.g. '#663399'                                                                                      |
-| `rgb`          | Array   | The colors rgb values. This is useful if you need to set alpha transparency, you can use these values in css with`rgba()` |
-| `complemented` | Object  | A repeat of the above `isDark`, `hex`, and `rgb` but all for the complemented spectrum color.                             |
-| `variants`     | Array   | 20 different lightness levels. From "almost white" to "almost black", and everything in-between them.                     |
+| Key            | Type    | Description                                                                                                            |
+|----------------|---------|------------------------------------------------------------------------------------------------------------------------|
+| `isDark`       | Boolean | Returns `true` or `false` for the current color. This is useful for determining if text on the color is light or dark. |
+| `hex`          | String  | The colors hex value. e.g. '#663399'                                                                                   |
+| `rgb`          | String  | The colors rgb value. Can be used in styles with: `rgb(${colors.violet.rgb})`                                          |
+| `variants`     | Array   | 40 different lightness levels. From "almost white" to "almost black", and everything in-between them.                  |
 
 ## How is this different from palx?
 
 * cyanea depends on [`color`](https://github.com/Qix-/color) instead of `chroma-js`, which has a much smaller unpacked size
 * cyanea provides more shade variations and goes to a darker scale. This is useful for creating light and dark modes for your themes.
 * cyanea provides both hex and rgb options so you can easily play with `rgba()` when necessary. e.g. `box-shadow`, etc.
-* For every generated color, cyanea provides a complementary color and a `isDark` boolean to help determine text colors for when the color is used as a background.
+* For every generated color, cyanea provides a `isDark` boolean to help determine text colors for when the color is used as a background.

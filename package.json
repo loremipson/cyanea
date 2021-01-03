@@ -1,28 +1,10 @@
 {
-  "name": "cyanea",
-  "version": "0.0.0",
-  "description": "Creates a full spectrum color palette from a single color value.",
-  "main": "dist/index.js",
-  "author": "Tyler Ipson <tyler.ipson@gmail.com>",
-  "repository": "github:loremipson/cyanea",
-  "license": "MIT",
-  "scripts": {
-    "build": "babel src -d dist"
-  },
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "site"
+  ],
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "semantic-release": "^17.0.4"
-  },
-  "dependencies": {
-    "color": "^3.1.2"
-  },
-  "keywords": [
-    "color",
-    "palette",
-    "generator",
-    "theme",
-    "spectrum"
-  ]
+    "lerna": "^3.16.4"
+  }
 }

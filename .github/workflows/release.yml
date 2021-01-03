@@ -9,14 +9,13 @@ jobs:
     name: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "14.x"
       - run: yarn install --frozen-lockfile
-      - run: yarn build
-      - run: npx semantic-release
+      - run: lerna run build
+      - run: lerna publish --conventionalCommits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-

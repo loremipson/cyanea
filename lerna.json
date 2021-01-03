@@ -1,0 +1,14 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "command": {
+   "publish": {
+      "allowBranch": "master",
+      "conventionalCommits": true,
+      "exact": true,
+      "message": "chore(release): %s"
+    }
+  },
+  "version": "1.0.4"
+}
