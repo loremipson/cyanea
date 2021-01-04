@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/loremipson/cyanea/compare/v2.0.0...v2.0.1) (2021-01-04)
+
+
+### Bug Fixes
+
+* get readme sorted for npm ([df9260c](https://github.com/loremipson/cyanea/commit/df9260c0d095fe47cf67cc59ff1d49bd93b7ff45))
+
+
+
+
+
 # [2.0.0](https://github.com/loremipson/cyanea/compare/v1.0.4...v2.0.0) (2021-01-03)
 
 
