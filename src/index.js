@@ -24,9 +24,7 @@ const colorObject = color => ({
   rgb: color.rgb().color.join(' '),
 })
 
-const createVariations = color => lightnessLevels.map(level => {
-  return colorObject(color.lightness(level))
-})
+const createVariations = color => lightnessLevels.map(level => colorObject(color.lightness(level)))
 
 const cyanea = hex => {
   const color = Color(hex)
