@@ -15,20 +15,20 @@ const names = [
   'pink',
 ]
 
-const hues = base => names.map((_, index) => base + (index * (360 / names.length)) % 360)
+const hues = (base: number) => names.map((_, index) => base + (index * (360 / names.length)) % 360)
 const lightnessLevels = Array.from(Array(40), (_, index) => ((index + 0.5) * 5) / 2).reverse()
 
-const colorObject = color => ({
+const colorObject = (color: Color) => ({
   isDark: color.isDark(),
   hex: color.hex(),
-  rgb: color.rgb().color.join(' '),
+  rgb: color.rgb().array().join(' '),
 })
 
-const createVariations = color => lightnessLevels.map(level => colorObject(color.lightness(level)))
+const createVariations = (color: Color) => lightnessLevels.map(level => colorObject(color.lightness(level)))
 
-const cyanea = hex => {
+const cyanea = (hex: string) => {
   const color = Color(hex)
-  const [h, s, l] = color.hsl().color
+  const [h, s, l] = color.hsl().array()
   const grayVariant = Color.hsl(h, (s / 10), l)
   
   const adjustments = {
@@ -52,7 +52,7 @@ const cyanea = hex => {
 
   const reduced = hues(h).reduce((acc, hue) => {
     const adjustedColor = Color.hsl(hue, s, l)
-    const [ h ] = adjustedColor.hsl().color
+    const [ h ] = adjustedColor.hsl().array()
     return {
       ...acc,
       [names[Math.round(h / 30)] || 'red']: {
