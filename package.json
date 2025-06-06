@@ -2,15 +2,31 @@
   "name": "cyanea",
   "version": "2.0.1",
   "description": "Generate systematic color palettes with automatic light/dark modes from any input color using OKLCH",
-  "main": "./dist/cyanea.umd.js",
-  "exports": "./dist/cyanea.modern.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./css/*": "./css/*"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "css"
+  ],
   "author": "Tyler Ipson <tyler.ipson@gmail.com>",
   "repository": "github:loremipson/cyanea",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle",
-    "start": "microbundle watch"
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "tsup",
+    "build:css": "node scripts/generate-css.js",
+    "start": "tsup --watch",
+    "prepublishOnly": "npm run build"
   },
   "release": {
     "branches": [
@@ -22,7 +38,8 @@
     ]
   },
   "devDependencies": {
-    "microbundle": "^0.15.1"
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
   },
   "keywords": [
     "color",
