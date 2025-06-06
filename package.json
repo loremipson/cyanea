@@ -12,6 +12,15 @@
     "build": "microbundle",
     "start": "microbundle watch"
   },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "next",
+        "prerelease": true
+      }
+    ]
+  },
   "devDependencies": {
     "@types/color": "^3.0.1",
     "microbundle": "^0.13.0"
