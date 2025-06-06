@@ -22,9 +22,8 @@
     ]
   },
   "devDependencies": {
-    "microbundle": "^0.13.0"
+    "microbundle": "^0.15.1"
   },
-  "dependencies": {},
   "keywords": [
     "color",
     "palette",
