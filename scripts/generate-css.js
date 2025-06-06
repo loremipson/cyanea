@@ -1,6 +1,6 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
-import { cyanea } from "../dist/index.mjs";
+import { cyanea } from "cyanea";
 
 const colorSystem = cyanea();
 

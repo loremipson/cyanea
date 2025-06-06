@@ -1,61 +1,112 @@
-## :octopus: cyanea
+# :octopus: cyanea
 
-Inspired by [palx](https://github.com/jxnblk/palx) and named after the Cyanea Octopus for its wild color changing abilities, cyanea is a color palette generator. You pass it a single value and it generates a full-spectrum color object.
+> ⚠️ **Alpha Release**: This library is in active development. Breaking changes are expected. Do not use in production.
+
+Named after the Cyanea Octopus for its remarkable color-changing abilities, cyanea is a systematic color palette generator that creates perceptually uniform design tokens from any input color.
+
+Inspired by [Radix Colors](https://www.radix-ui.com/colors), cyanea generates comprehensive color systems with automatic light/dark mode support and works out-of-the-box with `prefers-color-scheme` to eliminate annoying initial mode flickering.
+
+## Installation
 
 ```shell
-yarn add cyanea
-# or
-npm i cyanea
+npm install cyanea
 ```
 
-```js
-import cyanea from 'cyanea'
+## Quick Start
 
-const colors = cyanea('rebeccapurple')
-```
+### Option 1: Use Pre-generated CSS (Recommended)
 
-From here, cyanea generates a color object for each of the 12 hues in the color spectrum. Each hue has the following object created:
+Import ready-to-use CSS custom properties, just like Radix Colors:
 
-## The color object
+```css
+@import "cyanea/css/indigo.css";
+@import "cyanea/css/indigo-dark.css";
+@import "cyanea/css/slate.css";
+@import "cyanea/css/slate-dark.css";
 
-```js
-{
-  violet: {
-    isDark: true,
-    hex: '#663399',
-    rgb: ['101.99999999999996', '50.999999999999986', '153.00000000000003'],
-    variants: [
-      {
-        isDark: false,
-        hex: '#F9F5FC',
-        rgb: ['48.625', '245.4375', '251.81249999999997'],
-      },
-      // ... repeated for the remaining light/dark variants
-    ],
-  },
-  // ... repeated for the remaining hues
+.button {
+  background: var(--indigo-5-base);
+  color: var(--slate-6-base);
+}
+
+.button:hover {
+  background: var(--violet-5-vivid);
 }
 ```
 
-The color you pass will be the first color returned in the object. Since you might not always know what the hue name is, a useful way to get the passed color value is:
+Automatic light/dark mode support with `prefers-color-scheme`:
 
-```js
-const colors = cyanea('#663399')
-const passedColor = colors[Object.keys(colors)[0]]
+```css
+/* Automatically switches between light/dark modes */
+.card {
+  background: var(--slate-1-base);
+  border: 1px solid var(--slate-4-muted);
+  color: var(--slate-6-base);
+}
 ```
 
-### Available properties
+### Option 2: Generate Colors Programmatically
 
-| Key            | Type    | Description                                                                                                            |
-|----------------|---------|------------------------------------------------------------------------------------------------------------------------|
-| `isDark`       | Boolean | Returns `true` or `false` for the current color. This is useful for determining if text on the color is light or dark. |
-| `hex`          | String  | The colors hex value. e.g. '#663399'                                                                                   |
-| `rgb`          | String  | The colors rgb value. Can be used in styles with: `rgb(${colors.violet.rgb})`                                          |
-| `variants`     | Array   | 40 different lightness levels. From "almost white" to "almost black", and everything in-between them.                  |
+```js
+import { cyanea } from "cyanea";
 
-## How is this different from palx?
+const colors = cyanea("#6E56CF");
+console.log(colors.violet.light[5].base); // "oklch(0.52 0.8 300)"
+```
 
-* cyanea depends on [`color`](https://github.com/Qix-/color) instead of `chroma-js`, which has a much smaller unpacked size
-* cyanea provides more shade variations and goes to a darker scale. This is useful for creating light and dark modes for your themes.
-* cyanea provides both hex and rgb options so you can easily play with `rgba()` when necessary. e.g. `box-shadow`, etc.
-* For every generated color, cyanea provides a `isDark` boolean to help determine text colors for when the color is used as a background.
+## What You Get
+
+From a single input color, cyanea generates:
+
+- **20 semantic hues**: red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, pink, ruby, plus neutrals (slate, mauve, sand, olive)
+- **6 systematic tiers** per hue (1-6, from lightest to darkest)
+- **4 semantic variants** per tier: `base`, `muted`, `elevated`, `vivid`
+- **Automatic light/dark modes** that work with `prefers-color-scheme`
+- **OKLCH color space** for perceptually uniform scaling
+
+## Color System Structure
+
+```js
+const colors = cyanea("#6E56CF");
+
+// Access any color with: colors[hue][mode][tier][variant]
+colors.violet.light[1].base; // Very light violet
+colors.violet.light[5].vivid; // Vibrant accent violet
+colors.violet.dark[6].muted; // Dark mode text violet
+
+colors.slate.light[2].elevated; // Light mode section
+colors.slate.dark[3].base; // Dark mode component
+```
+
+### Systematic Tiers
+
+Each tier serves a specific purpose in your design system:
+
+- Tier 1: Surface backgrounds (cards, tooltips, overlays, flyout menus)
+- Tier 2: App/section backgrounds (main content areas, sidebars)
+- Tier 3: Component backgrounds (buttons, inputs, interactive elements)
+- Tier 4: Borders (dividers, component outlines, focus rings)
+- Tier 5: Wild card (contains your original input color - useful for accents, highlights, and primary actions like Radix's tier 9)
+- Tier 6: Text (readable text colors, icons)
+
+## Differences from Radix Colors
+
+While inspired by Radix's systematic approach, cyanea adds:
+
+- **More variants per tier**: 4 semantic options instead of single colors
+- **Less tiers**: 6 tiers instead of 12. The idea is to utilize variants more effectively
+- **No flicker**: Works seamlessly with `prefers-color-scheme` media queries
+- **Systematic generation**: Create entire color systems from any starting color
+- **OKLCH-first**: Perceptually uniform scaling across all hues
+
+## Browser Support
+
+Requires modern browsers with OKLCH support:
+
+- Chrome 111+ (March 2023)
+- Firefox 113+ (May 2023)
+- Safari 16.4+ (March 2023)
+
+## Development Status
+
+This library is in **alpha**. Colors are currently being test and will likely need tweaking, additional tiers, etc. The API will change frequently as we refine the color generation algorithms and DX. Feedback and contributions welcome!
