@@ -1,7 +1,7 @@
 {
   "name": "cyanea",
   "version": "2.0.1",
-  "description": "Creates a full spectrum color palette from a single color value.",
+  "description": "Generate systematic color palettes with automatic light/dark modes from any input color using OKLCH",
   "main": "./dist/cyanea.umd.js",
   "exports": "./dist/cyanea.modern.js",
   "types": "./dist/index.d.ts",
@@ -22,17 +22,15 @@
     ]
   },
   "devDependencies": {
-    "@types/color": "^3.0.1",
     "microbundle": "^0.13.0"
   },
-  "dependencies": {
-    "color": "^3.1.3"
-  },
+  "dependencies": {},
   "keywords": [
     "color",
     "palette",
     "generator",
     "theme",
-    "spectrum"
+    "spectrum",
+    "oklch"
   ]
 }
