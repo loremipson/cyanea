@@ -1,6 +1,6 @@
 # :octopus: cyanea
 
-> ⚠️ **Alpha Release**: This library is in active development. Breaking changes are expected. Do not use in production.
+> ⚠️ **Alpha Release**: Version 3.x of this library is in active development. Breaking changes are expected. Do not use in production.
 
 Named after the Cyanea Octopus for its remarkable color-changing abilities, cyanea is a systematic color palette generator that creates perceptually uniform design tokens from any input color.
 
